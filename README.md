@@ -65,4 +65,5 @@ Comprobar que tenemos la configuración red correcta, el forwarding activado y e
     ```
         sudo iptables -nv -t nat -L POSTROUTING
     ```
-![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/c16142ad-cfeb-4062-91a2-096255fa2907)
+    ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/c16142ad-cfeb-4062-91a2-096255fa2907)
+
