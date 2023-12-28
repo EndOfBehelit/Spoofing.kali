@@ -56,7 +56,7 @@ Comprobar que tenemos la configuración red correcta, el forwarding activado y e
     ```
          ip a
     ```
-        ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826        /4aeb46b3-8221-4a30-bd6d-099b877f8b17)
+        ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/4aeb46b3-8221-4a30-bd6d-099b877f8b17)
 
   * Forwarding <br>
     ```
