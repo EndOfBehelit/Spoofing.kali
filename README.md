@@ -4,22 +4,22 @@ Suplantación del servidor DHCP en una red mediante un ataque "starvation" y pos
 ## Configuración red de maquina atacante Kali
 Lo primero es configurar nuestra máquina atacante con dos tarjetas de red, una para la red interna en la que hará la suplantación del servicio DHCP y otra que conectará con el internet para proveer de internet a los usuarios engañados y poder escuchar su información, haciendo función de un router normal.<br>
 ```
-    sudo nano -c /etc/network/interfaces
+sudo nano -c /etc/network/interfaces
 ```
 ```
-    ####RED INTERNA####
-    auto eth0
-    iface eth0 inet static
-        address 192.168.1.66
-        netmask 255.255.255.0
-        dns-nameservers 8.8.8.8, 8.8.4.4
+####RED INTERNA####
+auto eth0
+iface eth0 inet static
+    address 192.168.1.66
+    netmask 255.255.255.0
+    dns-nameservers 8.8.8.8, 8.8.4.4
 
-    ####RED EXTERNA####
-    auto eht1
-    iface eth1 inet static
-        address 10.4.33.130
-        netmask 255.255.255.0
-        gateway 10.33.4.1
+####RED EXTERNA####
+auto eht1
+iface eth1 inet static
+    address 10.4.33.130
+    netmask 255.255.255.0
+    gateway 10.33.4.1
 ```
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/3f313f7e-8bd3-461b-868d-7822a120b7d2) <br>
 
@@ -27,30 +27,30 @@ Lo primero es configurar nuestra máquina atacante con dos tarjetas de red, una 
 
 Ahora debemos configurar nuestra máquina atacante para que pueda hacer un reenvío de paquetes y funcionar como router.
 ```
-    sudo nano -c /sysctl.conf
+sudo nano -c /sysctl.conf
 ```
 Esta opción viene comentada, con buscarla y descomentarla sirve. Esta es una forma persistente de activar el forwarding.
 ```
-    net.ipv4.ip_forward=1
+net.ipv4.ip_forward=1
 ```
 - **Habilitación de nateo persistente** <br>
 Por último debemos crear un pequeño script que habilite el nateo cada vez que se arranque el ordenador:
 ```
-    sudo nano -c masquerade.sh
+sudo nano -c masquerade.sh
 ```
 ```
-    #!/bin/bash
-    sudo iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+#!/bin/bash
+sudo iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
 ```
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/056aa1ba-51f7-400f-a051-69fa823f0ae6)
 
 Una vez creado el script, podemos hacer que se ejecute con un cron de forma automática:
 ```
-    sudo crontab -e
+sudo crontab -e
 ```
 ```
-    ##Sustituir ruta por la ruta en la que se encuentre el script
-    @reboot /home/administrador/masquerade.sh
+##Sustituir ruta por la ruta en la que se encuentre el script
+@reboot /home/administrador/masquerade.sh
 ```
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/bf13804f-180d-43ea-96b0-01b4bc0dcdb9)
 
@@ -58,30 +58,30 @@ Una vez creado el script, podemos hacer que se ejecute con un cron de forma auto
 Comprobar que tenemos la configuración red correcta, el forwarding activado y el nateo:
   * Reiniciar<br>
       ```
-          sudo reboot
+      sudo reboot
       ```
   * IP <br>
   ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/4aeb46b3-8221-4a30-bd6d-099b877f8b17)
     ```
-         ip a
+     ip a
     ```
   * Forwarding <br>
     ```
-        cat /proc/sys/net/ipv4/ip_forward
+    cat /proc/sys/net/ipv4/ip_forward
     ```
   * Nateo <br>
     ```
-        sudo iptables -nv -t nat -L POSTROUTING
+    sudo iptables -nv -t nat -L POSTROUTING
     ```
     ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/c16142ad-cfeb-4062-91a2-096255fa2907)
 
 ## Inicio del ataque starvation
 Para el ataque starvation usaremos yersinia, su interfaz gráfica no funciona bien, así que usaremos su consola en fomato visual
 ```
-    sudo apt-get install yersinia
+sudo apt-get install yersinia
 ```
 ```
-    sudo yersinia -I
+sudo yersinia -I
 ```
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/aa63a0ea-4fdd-402e-a80d-a18b66f6d813) <br>
 Debemos usar el modo DHCP, así que pulsamos `Espacio + F2` <br>
@@ -98,10 +98,10 @@ Configuración del servidor DHCP malicioso: <br>
 ## Escucha de información con Wireshark
 Una vez alguien trate de conectarse al router original, no tendrá IPs para otorgarle y entonces nosotros le daremos una IP falsa sin que él se percate, este podrá conectarse a internet con normalidad pero a través de nuestro router no del suyo, lo que nos permite escuchar toda su información.
 ```
-    sudo apt install wireshark
+sudo apt install wireshark
 ```
 ```
-    sudo wireshark
+sudo wireshark
 ```
 Seleccionamos nuestra tarjeta de red interna y podremos ver todos los paquetes enviados y recividos de la máquina engañada.
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/105fdbd8-fc46-4c29-979e-32fd90ea8473)
