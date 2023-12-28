@@ -85,6 +85,7 @@ Para el ataque starvation usaremos yersinia, su interfaz gráfica no funciona bi
 ```
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/aa63a0ea-4fdd-402e-a80d-a18b66f6d813) <br>
 Debemos usar el modo DHCP, así que pulsamos `Espacio + F2` <br>
+
 ---
 ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/5fbda515-0010-42c9-a531-e10fea809567) <br>
 Ahora abrimos el menú de ataques con `x` y pulsamos el ataque `1` envío de DHCPDISCOVER <br>
