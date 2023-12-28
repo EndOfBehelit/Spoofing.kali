@@ -52,6 +52,10 @@ Una vez creado el script, podemos hacer que se ejecute con un cron de forma auto
 ```
 - **Reinicio del sistema y comprobación**
 Comprobar que tenemos la configuración red correcta, el forwarding activado y el nateo:
+  * Reiniciar<br>
+      ```
+          sudo reboot
+      ```
   * IP <br>
   ![imagen](https://github.com/EndOfBehelit/Spoofing.kali/assets/154753826/4aeb46b3-8221-4a30-bd6d-099b877f8b17)
     ```
