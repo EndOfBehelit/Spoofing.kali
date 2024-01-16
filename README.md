@@ -27,7 +27,7 @@ iface eth1 inet static
 
 Ahora debemos configurar nuestra máquina atacante para que pueda hacer un reenvío de paquetes y funcionar como router.
 ```
-sudo nano -c /sysctl.conf
+sudo nano -c /etc/sysctl.conf
 ```
 Esta opción viene comentada, con buscarla y descomentarla sirve. Esta es una forma persistente de activar el forwarding.
 ```
